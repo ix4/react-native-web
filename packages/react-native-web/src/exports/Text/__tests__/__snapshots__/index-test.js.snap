@@ -51,10 +51,10 @@ exports[`components/Text prop "accessibilityLiveRegion" value is set 1`] = `
 `;
 
 exports[`components/Text prop "accessibilityRole" value alters HTML element 1`] = `
-<a
-  class="css-reset-4rbku5 css-cursor-18t94o4 css-text-901oao"
+<article
+  class="css-text-901oao"
   dir="auto"
-  role="link"
+  role="article"
 />
 `;
 
@@ -153,6 +153,13 @@ exports[`components/Text prop "nativeID" value is set 1`] = `
 exports[`components/Text prop "numberOfLines" value is set 1`] = `
 <div
   class="css-text-901oao css-textMultiLine-cens5h"
+  dir="auto"
+/>
+`;
+
+exports[`components/Text prop "numberOfLines" value is set to one 1`] = `
+<div
+  class="css-text-901oao css-textOneLine-vcwn7f"
   dir="auto"
 />
 `;

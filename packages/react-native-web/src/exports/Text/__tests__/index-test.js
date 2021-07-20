@@ -51,7 +51,7 @@ describe('components/Text', () => {
     });
 
     test('value alters HTML element', () => {
-      const { container } = render(<Text accessibilityRole="link" />);
+      const { container } = render(<Text accessibilityRole="article" />);
       expect(container.firstChild).toMatchSnapshot();
     });
   });
@@ -129,7 +129,11 @@ describe('components/Text', () => {
 
   describe('prop "numberOfLines"', () => {
     test('value is set', () => {
-      const { container } = render(<Text numberOfLines="3" />);
+      const { container } = render(<Text numberOfLines={3} />);
+      expect(container.firstChild).toMatchSnapshot();
+    });
+    test('value is set to one', () => {
+      const { container } = render(<Text numberOfLines={1} />);
       expect(container.firstChild).toMatchSnapshot();
     });
   });
@@ -148,6 +152,34 @@ describe('components/Text', () => {
         body.focus({ relatedTarget: target.node });
       });
       expect(onBlur).toBeCalled();
+    });
+  });
+
+  describe('prop "onClick"', () => {
+    test('is called', () => {
+      const onClick = jest.fn();
+      const ref = React.createRef();
+      act(() => {
+        render(<Text onClick={onClick} ref={ref} />);
+      });
+      const target = createEventTarget(ref.current);
+      act(() => {
+        target.click();
+      });
+      expect(onClick).toBeCalled();
+    });
+
+    test('is still called if "onPress" is provided', () => {
+      const onClick = jest.fn();
+      const ref = React.createRef();
+      act(() => {
+        render(<Text onClick={onClick} onPress={() => {}} ref={ref} />);
+      });
+      const target = createEventTarget(ref.current);
+      act(() => {
+        target.click();
+      });
+      expect(onClick).toBeCalled();
     });
   });
 
@@ -179,6 +211,19 @@ describe('components/Text', () => {
         target.pointerup({ button: 0 });
       });
       expect(onPress).toBeCalled();
+    });
+
+    test('is not called if "onClick" is provided', () => {
+      const onPress = jest.fn();
+      const ref = React.createRef();
+      act(() => {
+        render(<Text onClick={() => {}} onPress={onPress} ref={ref} />);
+      });
+      const target = createEventTarget(ref.current);
+      act(() => {
+        target.click();
+      });
+      expect(onPress).not.toBeCalled();
     });
   });
 
